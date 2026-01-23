@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
   return {
-    base: "/wellinton-ide---pro-code-editor/", // Nome do repositório no GitHub
+    base: "/wIDE/", // Nome do repositório no GitHub
     server: {
       port: 3000,
       host: "0.0.0.0",
