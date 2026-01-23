@@ -190,7 +190,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`h-full w-full flex flex-col md:flex-row bg-gradient-to-br ${theme.bg} overflow-hidden font-sans pb-20 md:pb-0 transition-colors duration-500`}>
+    <div className={`h-dvh w-dvw flex flex-col md:flex-row bg-gradient-to-br ${theme.bg} overflow-hidden font-sans pb-20 md:pb-0 transition-colors duration-500`}>
       
       {showHome && (
         <HomeMenu 

@@ -13,17 +13,17 @@ interface HomeMenuProps {
 
 const HomeMenu: React.FC<HomeMenuProps> = ({ onEnterEditor, onOpenProjects, currentTheme, onThemeSelect, theme }) => {
   return (
-    <div className={`fixed inset-0 z-[200] flex flex-col items-center justify-center p-6 bg-gradient-to-br ${theme.bg} transition-all duration-700`}>
+    <div className={`fixed inset-0 z-[200] h-dvh w-dvw flex flex-col items-center justify-center p-6 bg-gradient-to-br ${theme.bg} transition-all duration-700 overflow-y-auto`}>
       {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-400/10 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <div className="max-w-4xl w-full flex flex-col items-center text-center animate-slide-up">
-        <div className={`w-24 h-24 flex items-center justify-center rounded-3xl bg-cyan-400/20 border border-cyan-400/30 shadow-2xl shadow-cyan-400/20 mb-8`}>
-          <span className="text-5xl font-black text-cyan-400">W</span>
+      <div className="max-w-4xl w-full flex flex-col items-center text-center animate-slide-up my-auto py-8">
+        <div className={`w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-3xl bg-cyan-400/20 border border-cyan-400/30 shadow-2xl shadow-cyan-400/20 mb-6 md:mb-8 shrink-0`}>
+          <span className="text-4xl md:text-5xl font-black text-cyan-400">W</span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white mb-4">
+        <h1 className="text-4xl md:text-7xl font-black tracking-tighter text-white mb-4">
           WELLINTON <span className="text-cyan-400 italic">IDE PRO</span>
         </h1>
         <p className="text-white/40 text-lg md:text-xl font-medium tracking-wide mb-12 max-w-lg">
