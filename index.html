@@ -89,9 +89,34 @@
       }
     </style>
     <link rel="stylesheet" href="./index.css" />
+    <script>
+      // DETECTOR DE FALHA DE CARREGAMENTO (Scripts/CSS)
+      window.addEventListener(
+        "error",
+        function (e) {
+          if (
+            e.target &&
+            (e.target.tagName === "SCRIPT" || e.target.tagName === "LINK")
+          ) {
+            var d = document.createElement("div");
+            d.style.cssText =
+              "position:fixed;top:50px;left:0;width:100%;background:orange;color:black;z-index:9999;padding:10px;font-size:12px;";
+            d.innerHTML =
+              "FALHA CARREGAMENTO: " + (e.target.src || e.target.href);
+            document.body.appendChild(d);
+          }
+        },
+        true,
+      ); // Capture phase é obrigatória para erros de recurso
+    </script>
   </head>
   <body class="selection:bg-cyan-500/30">
-    <div id="root"></div>
+    <div id="root">
+      <div style="color: white; padding: 20px; font-family: sans-serif">
+        Iniciando App...<br />
+        <small id="status">Aguardando scripts...</small>
+      </div>
+    </div>
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
