@@ -1,8 +1,9 @@
-const CACHE_NAME = "wellinton-ide-pro-v10";
+const CACHE_NAME = "wellinton-ide-pro-v12";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.json",
+  "./404.html",
   "https://cdn.tailwindcss.com",
   "https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;600;800&display=swap",
   "https://esm.sh/react@^19.2.3",
@@ -15,10 +16,10 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener("install", (event) => {
+  self.skipWaiting(); // Força a ativação imediata
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)),
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
@@ -26,12 +27,16 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) return caches.delete(cache);
+          // Deleta qualquer cache antigo sem piedade
+          if (cache !== CACHE_NAME) {
+            console.log("Deletando cache antigo:", cache);
+            return caches.delete(cache);
+          }
         }),
       );
     }),
   );
-  self.clients.claim();
+  self.clients.claim(); // Controla a página imediatamente
 });
 
 self.addEventListener("fetch", (event) => {
