@@ -13,8 +13,13 @@ import { INITIAL_CODE, THEMES } from './constants';
 const App: React.FC = () => {
   const [showHome, setShowHome] = useState(true);
   const [code, setCode] = useState<CodeState>(() => {
-    const saved = localStorage.getItem('wellinton-ide-last-session');
-    return saved ? JSON.parse(saved) : INITIAL_CODE;
+    try {
+      const saved = localStorage.getItem('wellinton-ide-last-session');
+      return saved ? JSON.parse(saved) : INITIAL_CODE;
+    } catch (e) {
+      console.error("Erro ao carregar sessão salva:", e);
+      return INITIAL_CODE;
+    }
   });
 
   const [projects, setProjects] = useState<Project[]>(() => {

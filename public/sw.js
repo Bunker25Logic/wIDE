@@ -1,4 +1,4 @@
-const CACHE_NAME = "wellinton-ide-pro-v12";
+const CACHE_NAME = "wellinton-ide-pro-v13";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
