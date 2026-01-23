@@ -1,35 +1,30 @@
-const CACHE_NAME = "wellinton-ide-pro-v13";
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = "wellinton-ide-pro-v14";
+
+// Arquivos Core que devem ser pré-carregados
+const PRECACHE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./404.html",
   "https://cdn.tailwindcss.com",
-  "https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;600;800&display=swap",
-  "https://esm.sh/react@^19.2.3",
-  "https://esm.sh/react-dom@^19.2.3",
-  "https://esm.sh/prettier@3.5.2/standalone",
-  "https://esm.sh/prettier@3.5.2/plugins/html",
-  "https://esm.sh/prettier@3.5.2/plugins/postcss",
-  "https://esm.sh/prettier@3.5.2/plugins/babel",
-  "https://esm.sh/prettier@3.5.2/plugins/estree",
 ];
 
+// Instalação: Pré-carrega assets essenciais
 self.addEventListener("install", (event) => {
-  self.skipWaiting(); // Força a ativação imediata
+  self.skipWaiting(); // Força ativação imediata
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)),
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_ASSETS)),
   );
 });
 
+// Ativação: Limpeza agressiva de caches antigos
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          // Deleta qualquer cache antigo sem piedade
           if (cache !== CACHE_NAME) {
-            console.log("Deletando cache antigo:", cache);
+            console.log("Limpando cache antigo:", cache);
             return caches.delete(cache);
           }
         }),
@@ -39,36 +34,57 @@ self.addEventListener("activate", (event) => {
   self.clients.claim(); // Controla a página imediatamente
 });
 
+// Fetch: Estratégia Híbrida Inteligente
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-
-  // Skip cross-origin requests that might fail
   const url = new URL(event.request.url);
+  const isHTML =
+    event.request.mode === "navigate" || url.pathname.endsWith(".html");
+  const isManifest = url.pathname.endsWith("manifest.json");
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request)
+  // 1. Estratégia NETWORK FIRST para HTML e Manifesto (Evita tela preta após update)
+  if (isHTML || isManifest) {
+    event.respondWith(
+      fetch(event.request)
         .then((networkResponse) => {
-          // Only cache successful responses
-          if (
-            networkResponse &&
-            networkResponse.status === 200 &&
-            networkResponse.type === "basic"
-          ) {
-            const cacheCopy = networkResponse.clone();
-            caches
-              .open(CACHE_NAME)
-              .then((cache) => cache.put(event.request, cacheCopy));
-          }
+          // Se deu certo na rede, atualiza o cache e retorna
+          const clone = networkResponse.clone();
+          caches
+            .open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, clone));
           return networkResponse;
         })
         .catch(() => {
-          // Return cached index.html for navigation requests
-          if (event.request.mode === "navigate") {
-            return caches.match("./index.html");
-          }
-        });
-      return cachedResponse || fetchPromise;
+          // Se falhou (offline), usa o cache ou fallback
+          return caches.match(event.request).then((cached) => {
+            return cached || caches.match("./index.html"); // Fallback offline
+          });
+        }),
+    );
+    return;
+  }
+
+  // 2. Estratégia CACHE FIRST ou STALE-WHILE-REVALIDATE para outros assets (JS, CSS, Imagens)
+  // Assets do Vite com hash no nome são seguros para Cache First
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      // Se não está no cache, busca na rede e cacheia
+      return fetch(event.request).then((networkResponse) => {
+        if (
+          !networkResponse ||
+          networkResponse.status !== 200 ||
+          networkResponse.type !== "basic"
+        ) {
+          return networkResponse;
+        }
+        const clone = networkResponse.clone();
+        caches
+          .open(CACHE_NAME)
+          .then((cache) => cache.put(event.request, clone));
+        return networkResponse;
+      });
     }),
   );
 });
