@@ -1,0 +1,1 @@
+// Arquivo removido. Use o componente em ./components/Sidebar.tsx
