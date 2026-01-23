@@ -3,7 +3,7 @@
   "name": "Wellinton IDE Pro",
   "short_name": "WellintonIDE",
   "description": "Editor de código profissional otimizado para mobile e rascunhos rápidos.",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#22d3ee",
