@@ -286,7 +286,7 @@ const Editor: React.FC<EditorProps> = ({ type, value, onChange, label, isActive 
         <div className="flex-1 relative overflow-hidden bg-transparent">
           <textarea
             ref={textareaRef}
-            className={`absolute inset-0 w-full h-full bg-transparent py-6 px-4 font-mono text-[15px] leading-relaxed outline-none resize-none text-transparent ${theme.isLight ? 'caret-slate-900' : 'caret-cyan-400'} z-20 whitespace-pre overflow-auto scrollbar-hide`}
+            className={`absolute inset-0 w-full h-full bg-transparent py-6 px-4 font-mono text-[15px] leading-relaxed outline-none resize-none text-transparent ${theme.isLight ? 'caret-slate-900' : 'caret-cyan-400'} z-20 whitespace-pre-wrap break-words overflow-y-auto scrollbar-hide`}
             value={value}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
@@ -296,7 +296,7 @@ const Editor: React.FC<EditorProps> = ({ type, value, onChange, label, isActive 
             autoComplete="off"
             autoCapitalize="off"
           />
-          <pre ref={preRef} className={`absolute inset-0 w-full h-full py-6 px-4 font-mono text-[15px] leading-relaxed pointer-events-none whitespace-pre overflow-hidden ${theme.text}`} dangerouslySetInnerHTML={{ __html: highlight(value) + "\n" }} />
+          <pre ref={preRef} className={`absolute inset-0 w-full h-full py-6 px-4 font-mono text-[15px] leading-relaxed pointer-events-none whitespace-pre-wrap break-words overflow-hidden ${theme.text}`} dangerouslySetInnerHTML={{ __html: highlight(value) + "\n" }} />
           
           {/* IntelliCode Menu */}
           {showMenu && (
