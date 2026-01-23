@@ -3,8 +3,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-// SW removido para estabilidade PWA
-// if ('serviceWorker' in navigator) { ... }
+// Registro do Service Worker (Reset V1)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(registration => {
+        console.log('wIDE SW registrado:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Falha wIDE SW:', error);
+      });
+  });
+}
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
