@@ -1,4 +1,4 @@
-const CACHE_NAME = "wIDE-v1-reset";
+const CACHE_NAME = "wIDE-v2-rel";
 
 // Assets fundamentais para o app funcionar offline
 const CORE_ASSETS = [
