@@ -1,0 +1,25 @@
+
+{
+  "name": "Wellinton IDE Pro",
+  "short_name": "WellintonIDE",
+  "description": "Editor de código profissional otimizado para mobile e rascunhos rápidos.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#22d3ee",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/8213/8213303.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/8213/8213303.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
