@@ -2,11 +2,11 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { EditorType, ThemeConfig } from '../types';
 import { ICONS } from '../constants';
-import * as prettier from 'prettier';
-import * as parserHtml from 'prettier/parser-html';
-import * as parserPostcss from 'prettier/parser-postcss';
-import * as parserBabel from 'prettier/parser-babel';
-import * as estree from 'prettier/estree';
+import * as prettier from 'prettier/standalone';
+import * as parserHtml from 'prettier/plugins/html';
+import * as parserPostcss from 'prettier/plugins/postcss';
+import * as parserBabel from 'prettier/plugins/babel';
+import * as estree from 'prettier/plugins/estree';
 
 interface EditorProps {
   type: EditorType;
