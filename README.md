@@ -32,10 +32,6 @@ A IA contribuiu em aproximadamente **70-80% da base de código**, acelerando sig
 
 ## 🚀 Como Executar
 
-### Pré-requisitos
-- Node.js (versão 18 ou superior)
-- npm ou yarn
-
 ### Acesse 
 
 https://bunker25logic.github.io/wIDE/
